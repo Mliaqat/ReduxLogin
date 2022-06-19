@@ -35,10 +35,6 @@ background-color: rgba(0,0,0,0.5) !important;
 color: white;
 }
 
-input:focus{
-outline: 0 0 0 0  !important;
-box-shadow: 0 0 0 0 !important;
-}
 .login_btn{
 color: black;
 background-color: #FFC312;
@@ -55,8 +51,19 @@ color: white;
 .links a{
 margin-left: 4px;
 }
+button{
+    width: 100% !important;
+}
 
-.input-group {
+.login_btn:disabled
+ {
+  background-color: #ccc;
+  color: #292929;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.form-group  {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -66,10 +73,29 @@ margin-left: 4px;
     align-items: flex-start;
 }
 
-.input-group label{
+.form-group label{
     color: white;
     margin-bottom: .3rem;
 }
-.input-group input{
+.form-group input{
     width: 100% !important;
 }
+.form-group p{
+    margin-bottom: 0 !important;
+}
+ 
+.invalid input {
+    border: 1px solid #b40e0e !important;
+    background-color: #fddddd;
+   
+  }
+  
+  .invalid input:focus {
+    border-color: #ff8800 !important;
+    background-color: #fbe8d2;
+  }
+  
+  .error-text {
+    color: #b40e0e !important
+    ;
+  }

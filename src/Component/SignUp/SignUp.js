@@ -1,7 +1,97 @@
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
+import useInput from "../../hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
+import { dataActions } from "../../Store/dataSlice";
+import { uitoggleaction } from "../../Store/UiSlice";
 
 function SignUp() {
+  const dispatch = useDispatch();
+  let userData = useSelector((state) => state.data);
+  console.log(userData);
+
+  const {
+    value: firstName,
+    isValid: firstNameIsValid,
+    hasError: firstNameHasError,
+    valueChangeHandler: firstNameChangeHandler,
+    inputBlurHandler: firstNameBlurHandler,
+    reset: firstNameReset,
+  } = useInput((value) => value.trim() !== "");
+  const {
+    value: lastName,
+    isValid: lastNameIsValid,
+    hasError: lastNameHasError,
+    valueChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurHandler,
+    reset: lastNameReset,
+  } = useInput((value) => value.trim() !== "");
+  const {
+    value: email,
+    isValid: emailIsValid,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: emailReset,
+  } = useInput((value) => value.includes("@"));
+  const {
+    value: password,
+    isValid: passwordIsValid,
+    hasError: passwordHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: passwordReset,
+  } = useInput((value) => value.trim() !== "");
+  const {
+    value: confirmPassword,
+    isValid: confirmPasswordIsValid,
+    hasError: confirmPasswordHasError,
+    valueChangeHandler: confirmPasswordChangeHandler,
+    inputBlurHandler: confirmPasswordBlurHandler,
+    reset: confirmPasswordReset,
+  } = useInput((value) => value.trim() !== "");
+
+  let matchingPass = false;
+  if (password === confirmPassword) {
+    matchingPass = true;
+  }
+
+  let formIsValid = false;
+  if (
+    firstNameIsValid &&
+    lastNameIsValid &&
+    emailIsValid &&
+    passwordIsValid &&
+    confirmPasswordIsValid &&
+    matchingPass
+  ) {
+    formIsValid = true;
+  }
+
+  const data = {
+    firstName,
+    lastName,
+    email,
+    password,
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(
+        "https://reacttest2-8df5e-default-rtdb.firebaseio.com/user.json",
+        data
+      )
+      .then((res) => {
+        console.log(res);
+        dispatch(uitoggleaction.submitData());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="container">
       <div className="d-flex justify-content-center h-100">
@@ -10,63 +100,118 @@ function SignUp() {
             <h3>Register Now</h3>
           </div>
           <div className="card-body">
-            <form>
-              <div className="input-group form-group">
+            <form onSubmit={(e) => handleSubmit(e)}>
+              <div
+                className={
+                  firstNameHasError ? "invalid form-group" : "form-group"
+                }
+              >
                 <label>First Name:</label>
                 <input
                   type="text"
                   className="form-control"
                   placeholder="Enter your first name"
+                  value={firstName}
+                  onChange={firstNameChangeHandler}
+                  onBlur={firstNameBlurHandler}
                 />
+                {firstNameHasError && (
+                  <p className="error-text"> Please enter your first name </p>
+                )}
               </div>
-              <div className="input-group form-group my-3">
+              <div
+                className={
+                  lastNameHasError
+                    ? "invalid form-group my-3"
+                    : "form-group my-3"
+                }
+              >
                 <label>Last Name:</label>
                 <input
                   type="text"
                   className="form-control"
                   placeholder="Enter your last name"
+                  value={lastName}
+                  onChange={lastNameChangeHandler}
+                  onBlur={lastNameBlurHandler}
                 />
+                {lastNameHasError && (
+                  <p className="error-text">Please enter your last name </p>
+                )}
               </div>
-              <div className="input-group form-group">
+              <div
+                className={emailHasError ? "invalid form-group" : "form-group"}
+              >
                 <label>Email:</label>
                 <input
                   type="email"
                   className="form-control"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={emailChangeHandler}
+                  onBlur={emailBlurHandler}
                 />
+                {emailHasError && (
+                  <p className="error-text"> Please enter your email</p>
+                )}
               </div>
-              <div className="input-group form-group mt-3">
+              <div
+                className={
+                  passwordHasError
+                    ? "invalid form-group mt-3"
+                    : "form-group mt-3"
+                }
+              >
                 <label>Password:</label>
                 <input
                   type="password"
                   className="form-control"
                   placeholder="Enter your password"
+                  value={password}
+                  onChange={passwordChangeHandler}
+                  onBlur={passwordBlurHandler}
                 />
+                {passwordHasError && (
+                  <p className="error-text">Please enter your password </p>
+                )}
               </div>
-              <div className="input-group form-group my-3">
-                <label>Conforim Password:</label>
+              <div
+                className={
+                  confirmPasswordHasError
+                    ? "invalid form-group my-3"
+                    : "form-group my-3"
+                }
+              >
+                <label>Confrim Password:</label>
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Enter your conforim password"
+                  placeholder="Enter your confrim password"
+                  value={confirmPassword}
+                  onChange={confirmPasswordChangeHandler}
+                  onBlur={confirmPasswordBlurHandler}
                 />
+                {confirmPasswordHasError && (
+                  <p className="error-text">
+                    Please enter your confirm password
+                  </p>
+                )}
               </div>
 
               <div className="form-group">
-                <input
+                <button
                   type="submit"
-                  value="Sign up"
+                  disabled={!formIsValid}
                   className="btn float-right login_btn"
-                />
+                >
+                  Submit
+                </button>
               </div>
             </form>
           </div>
           <div className="card-footer">
             <div className="d-flex justify-content-center links">
-              Don't have an account?<Link to="signup">Sign Up</Link>
-            </div>
-            <div className="d-flex justify-content-center">
-              <a href="#">Forgot your password?</a>
+              <Link to="signup">Login Now</Link>
             </div>
           </div>
         </div>

@@ -1,8 +1,26 @@
 import React from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import useInput from "../../hooks/useInput";
 
 function Login() {
+  const {
+    value: email,
+    isValid: emailIsValid,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: emailReset,
+  } = useInput((value) => value.includes("@"));
+  const {
+    value: password,
+    isValid: passwordIsValid,
+    hasError: passwordHasError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    reset: passwordReset,
+  } = useInput((value) => value.trim() !== "");
+
   return (
     <div className="container">
       <div className="d-flex justify-content-center h-100">
@@ -12,29 +30,47 @@ function Login() {
           </div>
           <div className="card-body">
             <form>
-              <div className="input-group form-group">
-                <label>User Email:</label>
+              <div
+                className={emailHasError ? "invalid form-group" : "form-group"}
+              >
+                <label>Email:</label>
                 <input
-                  type="text"
+                  type="email"
                   className="form-control"
-                  placeholder="Enter Your Email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={emailChangeHandler}
+                  onBlur={emailBlurHandler}
                 />
+                {emailHasError && (
+                  <p className="error-text"> Please enter your email</p>
+                )}
               </div>
-              <div className="input-group form-group my-3">
+              <div
+                className={
+                  passwordHasError
+                    ? "invalid form-group my-3"
+                    : "form-group my-3"
+                }
+              >
                 <label>Password:</label>
                 <input
                   type="password"
                   className="form-control"
-                  placeholder="Enter Your Password"
+                  placeholder="Enter your password"
+                  value={password}
+                  onChange={passwordChangeHandler}
+                  onBlur={passwordBlurHandler}
                 />
+                {passwordHasError && (
+                  <p className="error-text">Please enter your password </p>
+                )}
               </div>
 
               <div className="form-group">
-                <input
-                  type="submit"
-                  value="Login"
-                  className="btn float-right login_btn"
-                />
+                <button type="submit" className="btn float-right login_btn">
+                  Login
+                </button>
               </div>
             </form>
           </div>
