@@ -1,0 +1,75 @@
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html,body{
+    background-color: rgb(10, 1, 58);
+/* background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+background-size: cover;
+background-repeat: no-repeat; */
+height: 100%;
+font-family: 'Numans', sans-serif;
+}
+
+.container{
+height: 100%;
+align-content: center;
+}
+
+
+.card{
+height: auto;
+margin-top: 5rem;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+
+.form-control{
+    border-radius: .5rem !important;
+}
+
+
+
+.card-header h3{
+color: white;
+}
+
+input:focus{
+outline: 0 0 0 0  !important;
+box-shadow: 0 0 0 0 !important;
+}
+.login_btn{
+color: black;
+background-color: #FFC312;
+width: 100px;
+}
+.login_btn:hover{
+color: black;
+background-color: white;
+}
+.links{
+color: white;
+}
+
+.links a{
+margin-left: 4px;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-content: flex-start;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.input-group label{
+    color: white;
+    margin-bottom: .3rem;
+}
+.input-group input{
+    width: 100% !important;
+}
