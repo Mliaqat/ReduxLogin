@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 
 function Home() {
   let userData = useSelector((state) => state.data.data);
-  console.log(userData);
+  let userrole = useSelector((state) => state.ui);
+  console.log("userrole", userrole);
 
   return (
     <div>
