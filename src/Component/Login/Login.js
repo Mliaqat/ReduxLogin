@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
+import { useDispatch, useSelector } from "react-redux";
+import { uitoggleaction } from "../../Store/UiSlice";
 
 function Login() {
+  let userData = useSelector((state) => state.data.data);
+
+  const [matchedData, setMatchedData] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     value: email,
     isValid: emailIsValid,
@@ -21,15 +29,36 @@ function Login() {
     reset: passwordReset,
   } = useInput((value) => value.trim() !== "");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const checkUser = userData.find(
+      (obj) => obj.email === email && obj.password === password
+    );
+    if (checkUser) {
+      if (checkUser.role == "USER") {
+        dispatch(uitoggleaction.userRole(checkUser.role));
+        navigate("/home");
+      } else {
+        navigate("/admin-panel");
+        dispatch(uitoggleaction.userRole(checkUser.role));
+      }
+    } else {
+      setMatchedData(true);
+    }
+  };
+
   return (
     <div className="container">
       <div className="d-flex justify-content-center h-100">
         <div className="card">
           <div className="card-header mt-3">
             <h3>Login</h3>
+            {matchedData && (
+              <p className="text-white">Email or Password Incorrect</p>
+            )}
           </div>
           <div className="card-body">
-            <form>
+            <form onSubmit={(e) => handleSubmit(e)}>
               <div
                 className={emailHasError ? "invalid form-group" : "form-group"}
               >

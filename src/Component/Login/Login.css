@@ -1,101 +1,100 @@
 /* Made with love by Mutiullah Samim*/
 
-@import url('https://fonts.googleapis.com/css?family=Numans');
+@import url("https://fonts.googleapis.com/css?family=Numans");
 
-html,body{
-    background-color: rgb(10, 1, 58);
-/* background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
-background-size: cover;
-background-repeat: no-repeat; */
-height: 100%;
-font-family: 'Numans', sans-serif;
+html,
+body {
+  background-color: rgb(52, 56, 56);
+  height: 100%;
+  font-family: "Numans", sans-serif;
 }
 
-.container{
-height: 100%;
-align-content: center;
+.container {
+  height: 100%;
+  align-content: center;
 }
 
-
-.card{
-height: auto;
-margin-top: 5rem;
-margin-bottom: auto;
-width: 400px;
-background-color: rgba(0,0,0,0.5) !important;
+.card {
+  height: auto;
+  margin-top: 5rem;
+  margin-bottom: auto;
+  width: 400px;
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-.form-control{
-    border-radius: .5rem !important;
+.form-control {
+  border-radius: 0.5rem !important;
 }
 
-
-
-.card-header h3{
-color: white;
+.card-header h3 {
+  color: white;
 }
 
-.login_btn{
-color: black;
-background-color: #FFC312;
-width: 100px;
+.login_btn {
+  color: black;
+  background-color: #ffc312;
+  width: 100px;
 }
-.login_btn:hover{
-color: black;
-background-color: white;
+.login_btn:hover {
+  color: black;
+  background-color: white;
 }
-.links{
-color: white;
-}
-
-.links a{
-margin-left: 4px;
-}
-button{
-    width: 100% !important;
+.links {
+  color: white;
 }
 
-.login_btn:disabled
- {
+.links a {
+  margin-left: 4px;
+}
+button {
+  width: 100% !important;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  align-items: baseline;
+}
+
+.login_btn:disabled {
   background-color: #ccc;
   color: #292929;
   border-color: #ccc;
   cursor: not-allowed;
 }
 
-.form-group  {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-content: flex-start;
-    width: 100%;
-    align-items: flex-start;
+.form-group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-content: flex-start;
+  width: 100%;
+  align-items: flex-start;
 }
 
-.form-group label{
-    color: white;
-    margin-bottom: .3rem;
+.form-group label {
+  color: white;
+  margin-bottom: 0.3rem;
 }
-.form-group input{
-    width: 100% !important;
+.form-group input {
+  width: 100% !important;
 }
-.form-group p{
-    margin-bottom: 0 !important;
+.form-group p {
+  margin-bottom: 0 !important;
 }
- 
+
 .invalid input {
-    border: 1px solid #b40e0e !important;
-    background-color: #fddddd;
-   
-  }
-  
-  .invalid input:focus {
-    border-color: #ff8800 !important;
-    background-color: #fbe8d2;
-  }
-  
-  .error-text {
-    color: #b40e0e !important
+  border: 1px solid #b40e0e !important;
+  background-color: #fddddd;
+}
+
+.invalid input:focus {
+  border-color: #ff8800 !important;
+  background-color: #fbe8d2;
+}
+
+.error-text {
+  color: #b40e0e !important
     ;
-  }
+}

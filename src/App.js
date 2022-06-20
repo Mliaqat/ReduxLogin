@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { dataActions } from "./Store/dataSlice";
 import { useEffect } from "react";
 import Home from "./Component/Home/Home";
+import AdminPanel from "./Component/AdminPanel/AdminPanel";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
               lastName: data[key].lastName,
               email: data[key].email,
               password: data[key].password,
+              role: data[key]?.role,
             });
           }
         })
@@ -47,6 +49,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/admin-panel" element={<AdminPanel />} />
         </Routes>
       </BrowserRouter>
     </div>

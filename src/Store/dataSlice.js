@@ -6,15 +6,11 @@ const dataSlice = createSlice({
   reducers: {
     storeData(state, action) {
       const newitem = action.payload;
+      state.data = [];
       newitem.forEach(function (newitem) {
         state.data.push(newitem);
       });
     },
-    // deleteData(state, action) {
-    //     console.log(state.data);
-    //     console.log(action.payload);
-    //     state.data = state.data.filter(item => item.id !== action.payload)
-    // }
   },
 });
 

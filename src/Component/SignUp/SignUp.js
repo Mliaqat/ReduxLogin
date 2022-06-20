@@ -1,6 +1,6 @@
 import axios from "axios";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import useInput from "../../hooks/useInput";
 import { useDispatch, useSelector } from "react-redux";
 import { dataActions } from "../../Store/dataSlice";
@@ -8,8 +8,17 @@ import { uitoggleaction } from "../../Store/UiSlice";
 
 function SignUp() {
   const dispatch = useDispatch();
-  let userData = useSelector((state) => state.data);
-  console.log(userData);
+  let userData = useSelector((state) => state.data.data);
+  const [alreadyExist, setAlreadyExist] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [role, setRole] = useState("USER");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData.find((obj) => obj.role === "ADMIN")) {
+      setIsAdmin(false);
+    }
+  }, [userData]);
 
   const {
     value: firstName,
@@ -74,22 +83,28 @@ function SignUp() {
     lastName,
     email,
     password,
+    role,
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post(
-        "https://reacttest2-8df5e-default-rtdb.firebaseio.com/user.json",
-        data
-      )
-      .then((res) => {
-        console.log(res);
-        dispatch(uitoggleaction.submitData());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!userData.find((obj) => obj.email === email)) {
+      setAlreadyExist(false);
+      await axios
+        .post(
+          "https://reacttest2-8df5e-default-rtdb.firebaseio.com/user.json",
+          data
+        )
+        .then((res) => {
+          dispatch(uitoggleaction.submitData());
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setAlreadyExist(true);
+    }
   };
 
   return (
@@ -98,6 +113,7 @@ function SignUp() {
         <div className="card">
           <div className="card-header mt-3">
             <h3>Register Now</h3>
+            {alreadyExist && <p className="error-text"> user already exists</p>}
           </div>
           <div className="card-body">
             <form onSubmit={(e) => handleSubmit(e)}>
@@ -197,6 +213,22 @@ function SignUp() {
                   </p>
                 )}
               </div>
+              {isAdmin && (
+                <div className="form-group my-3">
+                  <label>Select Admin:</label>
+                  <div className="grid">
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      onChange={(e) => setRole(e.target.value)}
+                      value="ADMIN"
+                      id="defaultCheck1"
+                    />
+                    <label className="ms-3">Is Admin</label>
+                  </div>
+                  <br></br>
+                </div>
+              )}
 
               <div className="form-group">
                 <button
@@ -211,7 +243,7 @@ function SignUp() {
           </div>
           <div className="card-footer">
             <div className="d-flex justify-content-center links">
-              <Link to="signup">Login Now</Link>
+              <Link to="/">Login Now</Link>
             </div>
           </div>
         </div>
